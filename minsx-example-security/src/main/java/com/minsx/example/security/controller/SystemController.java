@@ -1,8 +1,7 @@
 package com.minsx.example.security.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.minsx.framework.security.annotation.Authority;
-import com.minsx.framework.security.simple.AuthenticationHolder;
+import com.minsx.framework.security.annotation.Logic;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -19,17 +18,18 @@ public class SystemController {
 
     @GetMapping(value = "/userInfo")
     @ResponseBody
+    @Authority(value = {"user:good", "system:mack"}, logic = Logic.AND)
     public ResponseEntity<?> getUserInfo() {
         return new ResponseEntity<Object>("username:good", HttpStatus.OK);
     }
 
     @PutMapping(value = "/update")
     @ResponseBody
-    public ResponseEntity<?> updateUser() {
+    public ResponseEntity<?> updateUser(@RequestParam String name, @RequestParam Integer age) {
         return new ResponseEntity<Object>("update success", HttpStatus.OK);
     }
 
-    @PostMapping(value = "/deleteUser")
+    @DeleteMapping(value = "/deleteUser")
     @Authority({"admin", "user"})
     public ResponseEntity<?> deleteUser() {
         return new ResponseEntity<Object>("username:good", HttpStatus.OK);
