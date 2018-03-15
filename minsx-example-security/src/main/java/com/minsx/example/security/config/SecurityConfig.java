@@ -16,13 +16,13 @@ public class SecurityConfig implements WebSecurityConfigurer {
                 .unNeedAuthorize("/", "/static/**")
                 .and()
                 .loginConfigurer()
-                .loginAPIUrl("/user/login")
+                .loginAPIUrl("/api/login")
                 .loginPageUrl("/user/login")
                 .loginFailureUrl("/login")
                 .loginSuccessUrl("/user")
                 .and()
                 .logoutConfigurer()
-                .logoutUrl("/user/logout")
+                .logoutUrl("/api/logout")
                 .logoutSuccessUrl("/");
     }
 

@@ -1,8 +1,7 @@
 package com.minsx.example.security.entity;
 
 
-import com.minsx.framework.security.base.Authorize;
-import com.minsx.framework.security.base.SecurityUser;
+import com.minsx.framework.security.core.*;
 
 import java.util.List;
 
@@ -16,7 +15,12 @@ public class User implements SecurityUser {
 
     private Boolean isEnabled;
 
-    private List<Authorize> authorities;
+    private List<Role> roles;
+
+    private List<CustomAuthorize> customAuthorizes;
+
+    private List<RequestAuthorize> requestAuthorizes;
+
 
     @Override
     public String getUsername() {
@@ -30,18 +34,29 @@ public class User implements SecurityUser {
 
     @Override
     public Boolean isLocked() {
-        return this.isLock;
+         return isLock;
     }
 
     @Override
     public Boolean isEnabled() {
-        return this.isEnabled;
+        return isEnabled;
     }
 
     @Override
-    public List<Authorize> getAuthorities() {
-        return this.authorities;
+    public List<Role> getRoles() {
+        return this.roles;
     }
+
+    @Override
+    public List<CustomAuthorize> getCustomAuthorizes() {
+        return this.customAuthorizes;
+    }
+
+    @Override
+    public List<RequestAuthorize> getRequestAuthorizes() {
+        return this.requestAuthorizes;
+    }
+
 
     public void setUsername(String username) {
         this.username = username;
@@ -67,7 +82,15 @@ public class User implements SecurityUser {
         isEnabled = enabled;
     }
 
-    public void setAuthorities(List<Authorize> authorities) {
-        this.authorities = authorities;
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
+
+    public void setCustomAuthorizes(List<CustomAuthorize> customAuthorizes) {
+        this.customAuthorizes = customAuthorizes;
+    }
+
+    public void setRequestAuthorizes(List<RequestAuthorize> requestAuthorizes) {
+        this.requestAuthorizes = requestAuthorizes;
     }
 }
