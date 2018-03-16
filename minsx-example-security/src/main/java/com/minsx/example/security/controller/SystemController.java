@@ -1,7 +1,6 @@
 package com.minsx.example.security.controller;
 
-import com.minsx.framework.security.annotation.Authority;
-import com.minsx.framework.security.annotation.Logic;
+import com.minsx.framework.security.annotation.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -18,9 +17,16 @@ public class SystemController {
 
     @GetMapping(value = "/userInfo")
     @ResponseBody
-    @Authority(value = {"user:good", "system:mack"}, logic = Logic.AND)
-    public ResponseEntity<?> getUserInfo() {
+    //@VerifyAuthority(value = {"user:good", "system:mack", "group:jack"}, logic = Logic.OR)
+    //@VerifyRole(value = {"admin", "user", "super"}, logic = Logic.OR, order = Order.BEFORE, scope = Scope.EXCLUDE)
+    @VerifyExpression(value = {"'good'==#name"},script = Script.SPEL)
+    public ResponseEntity<?> getUserInfo(@RequestParam String name) {
         return new ResponseEntity<Object>("username:good", HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/select")
+    public ResponseEntity<?> selectUser() {
+        return new ResponseEntity<Object>("select success", HttpStatus.OK);
     }
 
     @PutMapping(value = "/update")
@@ -30,7 +36,7 @@ public class SystemController {
     }
 
     @DeleteMapping(value = "/deleteUser")
-    @Authority({"admin", "user"})
+    @VerifyAuthority({"admin", "user"})
     public ResponseEntity<?> deleteUser() {
         return new ResponseEntity<Object>("username:good", HttpStatus.OK);
     }

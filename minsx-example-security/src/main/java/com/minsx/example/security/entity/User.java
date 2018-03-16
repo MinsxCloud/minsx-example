@@ -17,9 +17,9 @@ public class User implements SecurityUser {
 
     private List<Role> roles;
 
-    private List<CustomAuthorize> customAuthorizes;
+    private List<CustomAuthority> customAuthorities;
 
-    private List<RequestAuthorize> requestAuthorizes;
+    private List<RequestAuthority> requestAuthorities;
 
 
     @Override
@@ -48,13 +48,13 @@ public class User implements SecurityUser {
     }
 
     @Override
-    public List<CustomAuthorize> getCustomAuthorizes() {
-        return this.customAuthorizes;
+    public List<CustomAuthority> getCustomAuthorities() {
+        return this.customAuthorities;
     }
 
     @Override
-    public List<RequestAuthorize> getRequestAuthorizes() {
-        return this.requestAuthorizes;
+    public List<RequestAuthority> getRequestAuthorities() {
+        return this.requestAuthorities;
     }
 
 
@@ -86,11 +86,11 @@ public class User implements SecurityUser {
         this.roles = roles;
     }
 
-    public void setCustomAuthorizes(List<CustomAuthorize> customAuthorizes) {
-        this.customAuthorizes = customAuthorizes;
+    public void setCustomAuthorities(List<CustomAuthority> customAuthorities) {
+        this.customAuthorities = customAuthorities;
     }
 
-    public void setRequestAuthorizes(List<RequestAuthorize> requestAuthorizes) {
-        this.requestAuthorizes = requestAuthorizes;
+    public void setRequestAuthorities(List<RequestAuthority> requestAuthorities) {
+        this.requestAuthorities = requestAuthorities;
     }
 }
