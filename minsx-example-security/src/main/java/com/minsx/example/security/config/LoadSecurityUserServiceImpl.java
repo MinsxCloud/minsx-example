@@ -22,16 +22,17 @@ public class LoadSecurityUserServiceImpl implements LoadSecurityUserService {
         user.setPassword("admin");
         user.setEnabled(true);
         user.setLock(false);
+
         List<Role> roles = new ArrayList<>();
         roles.add(new SimpleRole("admin"));
         roles.add(new SimpleRole("user"));
         user.setRoles(roles);
 
-        List<RequestAuthority> authorizes = new ArrayList<>();
-        authorizes.add(new SimpleRequestAuthority("/user/userInfo","GET","ALL"));
-        authorizes.add(new SimpleRequestAuthority("/user/select","GET","ALL"));
-        authorizes.add(new SimpleRequestAuthority("/user/update","PUT","name=good&age=25"));
-        user.setRequestAuthorities(authorizes);
+        List<RequestAuthority> requestAuthorities = new ArrayList<>();
+        requestAuthorities.add(new SimpleRequestAuthority("/user/userInfo","GET","ALL"));
+        requestAuthorities.add(new SimpleRequestAuthority("/user/select","GET","ALL"));
+        requestAuthorities.add(new SimpleRequestAuthority("/user/update","PUT","name=good&age=25"));
+        user.setRequestAuthorities(requestAuthorities);
 
         List<CustomAuthority> customAuthorizes = new ArrayList<>();
         customAuthorizes.add(new SimpleCustomAuthority("user","good"));
