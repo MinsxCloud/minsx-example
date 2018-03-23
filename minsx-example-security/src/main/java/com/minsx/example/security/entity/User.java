@@ -1,7 +1,11 @@
 package com.minsx.example.security.entity;
 
 
-import com.minsx.framework.security.core.*;
+
+import com.minsx.framework.security.api.authority.CustomAuthority;
+import com.minsx.framework.security.api.authority.RequestAuthority;
+import com.minsx.framework.security.api.basic.Role;
+import com.minsx.framework.security.api.basic.SecurityUser;
 
 import java.util.List;
 

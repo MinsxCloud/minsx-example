@@ -1,7 +1,7 @@
 package com.minsx.example.security.config;
 
-import com.minsx.framework.security.configurer.WebSecurity;
-import com.minsx.framework.security.configurer.WebSecurityConfigurer;
+import com.minsx.framework.security.api.configure.WebSecurity;
+import com.minsx.framework.security.api.configure.WebSecurityConfigurer;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
@@ -12,18 +12,15 @@ public class SecurityConfig implements WebSecurityConfigurer {
         webSecurity
                 .enabled(true)
                 .authorizeConfigurer()
-                .needAuthorize("/**")
-                .unNeedAuthorize("/", "/static/**")
+                    .needAuthorize("/**")
+                    .unNeedAuthorize("/", "/static/**")
                 .and()
-                .loginConfigurer()
-                .loginAPIUrl("/api/login")
-                .loginPageUrl("/user/login")
-                .loginFailureUrl("/login")
-                .loginSuccessUrl("/user")
+                    .loginConfigurer()
+                    .loginAPIUrl("/api/login")
+                    .loginPageUrl("/page/login")
                 .and()
-                .logoutConfigurer()
-                .logoutUrl("/api/logout")
-                .logoutSuccessUrl("/");
+                    .logoutConfigurer()
+                    .logoutAPIUrl("/api/logout");
     }
 
 

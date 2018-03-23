@@ -25,9 +25,19 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
-        <dependency>
+        <!--<dependency>
             <groupId>com.minsx</groupId>
             <artifactId>minsx-framework-security</artifactId>
+            <version>1.0.0</version>
+        </dependency>-->
+        <dependency>
+            <groupId>com.minsx</groupId>
+            <artifactId>minsx-framework-security-api</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.minsx</groupId>
+            <artifactId>minsx-framework-security-core</artifactId>
             <version>1.0.0</version>
         </dependency>
     </dependencies>

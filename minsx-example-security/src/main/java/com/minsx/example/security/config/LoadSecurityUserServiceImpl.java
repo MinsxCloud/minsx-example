@@ -1,11 +1,16 @@
 package com.minsx.example.security.config;
 
 import com.minsx.example.security.entity.User;
-import com.minsx.framework.security.core.*;
-import com.minsx.framework.security.exception.AuthorizationException;
-import com.minsx.framework.security.simple.SimpleCustomAuthority;
-import com.minsx.framework.security.simple.SimpleRequestAuthority;
-import com.minsx.framework.security.simple.SimpleRole;
+import com.minsx.framework.security.api.authority.CustomAuthority;
+import com.minsx.framework.security.api.authority.RequestAuthority;
+import com.minsx.framework.security.api.basic.Role;
+import com.minsx.framework.security.api.basic.SecurityUser;
+import com.minsx.framework.security.api.exception.AuthorityDenyException;
+import com.minsx.framework.security.api.exception.AuthorizationException;
+import com.minsx.framework.security.api.service.LoadSecurityUserService;
+import com.minsx.framework.security.api.simple.SimpleCustomAuthority;
+import com.minsx.framework.security.api.simple.SimpleRequestAuthority;
+import com.minsx.framework.security.api.simple.SimpleRole;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,8 +23,8 @@ public class LoadSecurityUserServiceImpl implements LoadSecurityUserService {
     @Override
     public SecurityUser loadUser(HttpServletRequest httpServletRequest) throws AuthorizationException {
         User user = new User();
-        user.setUsername("admin");
-        user.setPassword("admin");
+        user.setUsername(httpServletRequest.getParameter("username"));
+        user.setPassword(httpServletRequest.getParameter("password"));
         user.setEnabled(true);
         user.setLock(false);
 
@@ -29,19 +34,23 @@ public class LoadSecurityUserServiceImpl implements LoadSecurityUserService {
         user.setRoles(roles);
 
         List<RequestAuthority> requestAuthorities = new ArrayList<>();
-        requestAuthorities.add(new SimpleRequestAuthority("/user/userInfo","GET","ALL"));
-        requestAuthorities.add(new SimpleRequestAuthority("/user/select","GET","ALL"));
-        requestAuthorities.add(new SimpleRequestAuthority("/user/update","PUT","name=good&age=25"));
+        requestAuthorities.add(new SimpleRequestAuthority("/user/userInfo", "GET", "ALL"));
+        requestAuthorities.add(new SimpleRequestAuthority("/user/select", "GET", "ALL"));
+        requestAuthorities.add(new SimpleRequestAuthority("/user/deleteUser", "DELETE", "ALL"));
+        requestAuthorities.add(new SimpleRequestAuthority("/user/update", "PUT", "name=good&age=25"));
         user.setRequestAuthorities(requestAuthorities);
 
         List<CustomAuthority> customAuthorizes = new ArrayList<>();
-        customAuthorizes.add(new SimpleCustomAuthority("user","good"));
-        customAuthorizes.add(new SimpleCustomAuthority("user","john"));
-        customAuthorizes.add(new SimpleCustomAuthority("user","joker"));
-        customAuthorizes.add(new SimpleCustomAuthority("system","mack"));
+        customAuthorizes.add(new SimpleCustomAuthority("user", "good"));
+        customAuthorizes.add(new SimpleCustomAuthority("user", "john"));
+        customAuthorizes.add(new SimpleCustomAuthority("user", "joker"));
+        customAuthorizes.add(new SimpleCustomAuthority("system", "mack"));
         user.setCustomAuthorities(customAuthorizes);
+
+        if (!("admin".equals(user.getUsername()) && "admin".equals(user.getPassword()))) {
+            throw new AuthorityDenyException(403, "username or password is incorrect");
+        }
         return user;
-        //throw new AccessDenyException(403, "username or password is incorrect");
     }
 
 }
